@@ -1,1 +1,70 @@
-cms moises
+import java.util.*;
+public class PilaRadiotaxi {
+    Scanner s=new Scanner(System.in);
+ private int tope;
+    private int MAX=100;
+    private Radiotaxi v[]=new Radiotaxi[MAX];
+    
+    public PilaRadiotaxi(){
+        tope=0;
+    }
+    public boolean esVacia(){
+        return tope==0;
+    }
+    public boolean esLlena(){
+        return tope==MAX;
+    }
+    public void leer(int n){
+        int i;
+        
+        for(i=1;i<=n;i++){
+            System.out.println("DATOS DEL Radiotaxi (color, marca, placa): ");
+            Radiotaxi e=new Radiotaxi();
+            String col=s.next();
+            String marc=s.next();
+            String placa=s.next();
+            e.setColor(col);
+            e.setMarca(marc);
+            e.setPlaca(placa);
+            adicionar(e);
+        }
+    }
+    public void adicionar(Radiotaxi e){
+        if(!esLlena()){
+            tope++;
+            v[tope]=e;
+        }else{
+            System.out.println("Pila Llena");
+        }
+    }
+    public Radiotaxi eliminar(){
+        Radiotaxi p=null;
+        if(!esVacia()){
+            p=v[tope];
+            tope--;
+        }else{
+            System.out.println("Pila Vacia");
+        }
+        return(p);
+    }
+    public int nroElems(){
+        return (tope);
+    }
+    
+   public void vaciar(PilaRadiotaxi p){
+       while(!p.esVacia()){
+           adicionar(p.eliminar());
+       }
+   }
+   
+   public void mostrar(){
+       Radiotaxi p;
+       PilaRadiotaxi auxPp=new PilaRadiotaxi();
+       System.out.println("************   Radiotaxi   **********");
+       while(!esVacia()){
+           p=eliminar();
+           auxPp.adicionar(p);
+           System.out.println(p.getColor()+" "+p.getMarca()+" "+p.getPlaca());
+       }this.vaciar(auxPp);
+   }
+}
